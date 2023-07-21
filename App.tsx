@@ -88,7 +88,7 @@ const App = (): React.JSX.Element => {
   // variable defines.
   const title = 'AgoraChatQuickstart';
   // const senderId = '';
-  let fcmToken = '';
+  let fcmToken = React.useRef('');
   const requestGetTokenUrl = _requestGetTokenUrl;
   const requestRegistryAccountUrl = _requestRegistryAccountUrl;
   const [appKey, setAppKey] = React.useState(_appKey);
@@ -179,12 +179,12 @@ const App = (): React.JSX.Element => {
     console.log('init:');
     await requestUserPermission();
     await checkApplicationPermission();
-    fcmToken = await requestFcmToken();
-    // rollLog('fcm token: ' + fcmToken);
+    fcmToken.current = await requestFcmToken();
+    rollLog('fcm token: ' + fcmToken.current);
 
     const pushConfig = new ChatPushConfig({
       deviceId: senderId,
-      deviceToken: fcmToken,
+      deviceToken: fcmToken.current,
     });
     let o = new ChatOptions({
       autoLogin: false,
@@ -361,9 +361,10 @@ const App = (): React.JSX.Element => {
   };
 
   const updatePush = () => {
+    console.log('test:updatePush:', senderId, fcmToken.current);
     ChatClient.getInstance()
       .updatePushConfig(
-        new ChatPushConfig({deviceId: senderId, deviceToken: fcmToken}),
+        new ChatPushConfig({deviceId: senderId, deviceToken: fcmToken.current}),
       )
       .then(() => {
         rollLog('updatePush: success');
