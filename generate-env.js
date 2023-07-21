@@ -3,9 +3,9 @@
 const path = require('node:path');
 const fs = require('node:fs');
 
-const project_root = path.resolve(__dirname, '..');
+const project_root = path.resolve(__dirname);
 
-const file = path.join(project_root, 'example', 'src', 'env.ts');
+const file = path.join(project_root, 'env.ts');
 const content = `
 export const test = false;
 export const appKey = '';
