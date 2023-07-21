@@ -289,7 +289,7 @@ const App = (): React.JSX.Element => {
             ChatClient.getInstance()
               .loginWithAgoraToken(username, token)
               .then(() => {
-                rollLog('login operation success.');
+                rollLog('login success.');
               })
               .catch(reason => {
                 rollLog('login fail: ' + JSON.stringify(reason));
